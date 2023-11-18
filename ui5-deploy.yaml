@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.6"
+metadata:
+  name: ap.materialapp
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: https://a03z.ucc.ovgu.de/
+          client: "238"
+        app:
+          name: ZSD_018_MATERIA
+          package: ZSD_018_ERPAPPOPDR
+          transport: A03K904828
+        exclude:
+          - /test/
