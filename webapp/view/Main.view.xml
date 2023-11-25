@@ -49,7 +49,7 @@
                     </Column>
                 </columns>
                 <items>
-                    <ColumnListItem type="Navigation" vAlign="Middle" press="onPress">
+                    <ColumnListItem type="Navigation" vAlign="Middle" press=".onListItemPress">
                         <cells>
                             <ObjectIdentifier
                                 title="{Matnr}"
