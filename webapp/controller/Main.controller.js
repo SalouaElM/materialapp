@@ -5,11 +5,12 @@ sap.ui.define([
     'sap/ui/model/Sorter',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
+	'sap/ui/export/Spreadsheet',
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter) {
+    function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter, Spreadsheet) {
         "use strict";
 
         return Controller.extend("ap.materialapp.controller.Main", {
@@ -97,6 +98,61 @@ sap.ui.define([
 
                 // apply the selected sort and group settings
                 oBinding.sort(aSorters);
+            },
+            createColumnConfig: function() {
+                var aCols = [];
+            
+                aCols.push({
+                    label: 'Material Number',
+                    property: 'Matnr',
+                    type: 'string'
+                });
+            
+                aCols.push({
+                    label: 'Material Description',
+                    property: 'Maktx',
+                    type: 'string'
+                });
+            
+                aCols.push({
+                    label: 'Material Group',
+                    property: 'Matkl',
+                    type: 'string'
+                });
+            
+                aCols.push({
+                    label: 'Material Type',
+                    property: 'Mtart',
+                    type: 'string'
+                });
+    
+                return aCols;
+            },    
+            onExport: function() {
+                var aCols, oRowBinding, oSettings, oSheet, oTable;
+    
+                if (!this._oTable) {
+                    this._oTable = this.byId('materialTable');
+                }
+    
+                oTable = this._oTable;
+                oRowBinding = oTable.getBinding('items');
+                aCols = this.createColumnConfig();
+    
+                oSettings = {
+                    workbook: {
+                        columns: aCols,
+                        hierarchyLevel: 'Level'
+                    },
+                    dataSource: oRowBinding,
+                    fileName: 'Table export Materials.xlsx',
+                    worker: false 
+                };
+    
+                oSheet = new Spreadsheet(oSettings);
+                oSheet.build().finally(function() {
+                    oSheet.destroy();
+                });
             },
         });
     });
