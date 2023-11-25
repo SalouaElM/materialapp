@@ -28,14 +28,62 @@ sap.ui.define([
                 var sSearchValue = oEvent.getParameter("newValue");
                 var oTable = this.byId("materialTable");
                 var oBinding = oTable.getBinding("items");
-
+            
                 var aFilters = [];
                 if (sSearchValue && sSearchValue.length > 0) {
-                    var oMaktxFilter = new Filter("Maktx", sap.ui.model.FilterOperator.Contains, sSearchValue);
-                    aFilters.push(oMaktxFilter);
+                    this._oMaktxFilter = new Filter("Maktx", sap.ui.model.FilterOperator.Contains, sSearchValue);
+                    aFilters.push(this._oMaktxFilter);
+                } else {
+                    // Clear the filter if search field is empty
+                    this._oMaktxFilter = null;
                 }
-                oBinding.filter(aFilters);
+            
+                // Get the other applied filters except for "Omschrijving" if present
+                var aAppliedFilters = this._appliedFilters.filter(function(filter) {
+                    return filter.sPath !== "Maktx";
+                });
+            
+                // Combine with "Omschrijving" filter if it exists
+                if (this._oMaktxFilter) {
+                    aAppliedFilters.push(this._oMaktxFilter);
+                }
+            
+                oBinding.filter(aAppliedFilters);
             },
+            
+            handleFilterDialogConfirm: function (oEvent) {
+                var oTable = this.byId("materialTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    aFilters = [];
+            
+                // Process the filter items
+                mParams.filterItems.forEach(function(oItem) {
+                    var sPath = oItem.getParent().getKey(),
+                        sOperator = 'EQ',
+                        sValue1 = oItem.getKey(),
+                        oFilter = new Filter(sPath, sOperator, sValue1);
+            
+                    aFilters.push(oFilter);
+                });
+            
+                // Store the applied filters in a variable in the controller
+                this._appliedFilters = aFilters;
+            
+                // Get the other applied filters except for "Omschrijving" if present
+                var aAppliedFilters = aFilters.filter(function(filter) {
+                    return filter.sPath !== "Maktx";
+                });
+            
+                // Combine with "Omschrijving" filter if it exists
+                if (this._oMaktxFilter) {
+                    aAppliedFilters.push(this._oMaktxFilter);
+                }
+            
+                // Apply the combined filters
+                oBinding.filter(aAppliedFilters);
+            },
+            
             handleSortButtonPressed: function () {
                 this.getViewSettingsDialog("ap.materialapp.fragments.sortDialog")
                     .then(function (oViewSettingsDialog) {
@@ -47,24 +95,6 @@ sap.ui.define([
                     .then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
-            },
-            handleFilterDialogConfirm: function (oEvent) {
-                var oTable = this.byId("materialTable"),
-                    mParams = oEvent.getParameters(),
-                    oBinding = oTable.getBinding("items"),
-                    aFilters = [];
-
-                mParams.filterItems.forEach(function(oItem) {
-                    let sPath = oItem.getParent().getKey(),
-                        sOperator = 'EQ', 
-                        sValue1 = oItem.getKey(),
-                        oFilter = new Filter(sPath, sOperator, sValue1);
-                    aFilters.push(oFilter);
-                });
-                
-                // apply filter settings
-                oBinding.filter(aFilters);
-
             },
             getViewSettingsDialog: function (sDialogFragmentName) {
                 var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
