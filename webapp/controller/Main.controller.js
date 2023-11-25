@@ -4,11 +4,12 @@ sap.ui.define([
     'sap/f/library',
     'sap/ui/model/Sorter',
     'sap/ui/core/Fragment',
+    'sap/ui/model/Filter',
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Device, fioriLibrary, Sorter, Fragment) {
+    function (Controller, Device, fioriLibrary, Sorter, Fragment, Filter) {
         "use strict";
 
         return Controller.extend("ap.materialapp.controller.Main", {
@@ -22,11 +23,47 @@ sap.ui.define([
 
                 oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
             },
+            onDescriptionSearch: function (oEvent) {
+                var sSearchValue = oEvent.getParameter("newValue");
+                var oTable = this.byId("materialTable");
+                var oBinding = oTable.getBinding("items");
+
+                var aFilters = [];
+                if (sSearchValue && sSearchValue.length > 0) {
+                    var oMaktxFilter = new Filter("Maktx", sap.ui.model.FilterOperator.Contains, sSearchValue);
+                    aFilters.push(oMaktxFilter);
+                }
+                oBinding.filter(aFilters);
+            },
             handleSortButtonPressed: function () {
                 this.getViewSettingsDialog("ap.materialapp.fragments.sortDialog")
                     .then(function (oViewSettingsDialog) {
                         oViewSettingsDialog.open();
                     });
+            },
+            handleFilterButtonPressed: function () {
+                this.getViewSettingsDialog("ap.materialapp.fragments.filterDialog")
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
+            },
+            handleFilterDialogConfirm: function (oEvent) {
+                var oTable = this.byId("materialTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    aFilters = [];
+
+                mParams.filterItems.forEach(function(oItem) {
+                    let sPath = oItem.getParent().getKey(),
+                        sOperator = 'EQ', 
+                        sValue1 = oItem.getKey(),
+                        oFilter = new Filter(sPath, sOperator, sValue1);
+                    aFilters.push(oFilter);
+                });
+                
+                // apply filter settings
+                oBinding.filter(aFilters);
+
             },
             getViewSettingsDialog: function (sDialogFragmentName) {
                 var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];

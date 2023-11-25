@@ -1,0 +1,62 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleFilterDialogConfirm">
+		<filterItems>
+			<ViewSettingsCustomItem text="Omschrijving">
+                <customControl>
+                    <FlexBox alignItems="Center" justifyContent="SpaceBetween">
+                        <HBox alignItems="Center">
+                            <Label text="Omschrijving" />
+                        </HBox>
+                        <HBox alignItems="Center">
+                            <SearchField
+                                width="100%"
+                                placeholder="Search Description"
+                                liveChange="onDescriptionSearch"
+                            />
+                        </HBox>
+                    </FlexBox>
+                </customControl>
+            </ViewSettingsCustomItem>
+            <ViewSettingsFilterItem
+				text="Group"
+				key="Matkl"
+				multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Finished Bikes" key="BIKES" />
+					<ViewSettingsItem text="Raw Materials" key="RAW" />
+					<ViewSettingsItem text="Services" key="SERV" />
+					<ViewSettingsItem text="Safety Gear" key="SFTY" />
+					<ViewSettingsItem text="Spare Parts" key="SPARE" />
+					<ViewSettingsItem text="Utilities" key="UTIL" />
+					<ViewSettingsItem text="Wheel Assembly" key="WHEEL" />
+				</items>
+			</ViewSettingsFilterItem>
+            <ViewSettingsFilterItem
+				text="Type"
+				key="Mtart"
+				multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Raw Materials" key="ROH" />
+					<ViewSettingsItem text="Trading goods" key="HAWA" />
+					<ViewSettingsItem text="Vehicle config" key="VEHI" />
+				</items>
+			</ViewSettingsFilterItem>
+            <ViewSettingsFilterItem
+				text="Industry"
+				key="Mbrsh"
+				multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Retail" key="1" />
+					<ViewSettingsItem text="Plant engin./construction" key="A" />
+                    <ViewSettingsItem text="Chemical" key="C" />
+                    <ViewSettingsItem text="Mechanical engineering" key="M" />
+                    <ViewSettingsItem text="Pharmaceuticals" key="P" />
+                    <ViewSettingsItem text="Service Provider" key="S" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>
