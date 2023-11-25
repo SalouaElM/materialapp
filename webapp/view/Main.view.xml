@@ -1,9 +1,9 @@
 <mvc:View
     controllerName="ap.materialapp.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
     xmlns="sap.m"
->
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+
     <Page
         id="page"
         title="{i18n>title}"
@@ -49,22 +49,10 @@
                     </Column>
                 </columns>
                 <items>
-                    <ColumnListItem
-                        type="Active"
-                        vAlign="Middle"
-                        navigated="{
-						parts: [
-							'settings>/navigatedItem',
-							'Matnr'
-						],
-						formatter: '.isNavigated'
-					}"
-                        press="onPress"
-                    >
+                    <ColumnListItem type="Navigation" vAlign="Middle" press="onPress">
                         <cells>
                             <ObjectIdentifier
                                 title="{Matnr}"
-
                             />
                             <Text text="{Maktx}" />
                             <Text text="{Matkl}" />
