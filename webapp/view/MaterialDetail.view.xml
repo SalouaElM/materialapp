@@ -1,59 +1,94 @@
 <mvc:View
-	controllerName="ap.materialapp.controller.MaterialDetail"
-	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.uxap"
-	xmlns:m="sap.m"
-	xmlns:f="sap.f"
-	xmlns:form="sap.ui.layout.form">
+    controllerName="ap.materialapp.controller.MaterialDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+>
     <ObjectPageLayout
-		id="ObjectPageLayout"
-		showTitleInHeaderContent="true"
-		alwaysShowContentHeader="false"
-		preserveHeaderStateOnScroll="false"
-		headerContentPinnable="true"
-		isChildPage="true"
-		upperCaseAnchorBar="false">
-        <headerTitle>
-			<ObjectPageDynamicHeaderTitle>
-				<actions>
-				</actions>
-			</ObjectPageDynamicHeaderTitle>
-		</headerTitle>
-       
-        <sections>
-			<ObjectPageSection title="General Information">
-				<subSections>
-					<ObjectPageSubSection>
-						<blocks>
-							<form:SimpleForm
-								maxContainerCols="2"
-								editable="false"
-								layout="ResponsiveGridLayout"
-								labelSpanL="12"
-								labelSpanM="12"
-								emptySpanL="0"
-								emptySpanM="0"
-								columnsL="1"
-								columnsM="1">
-								<form:content>
-									<m:Label text="Product ID"/>
-									<m:Label text="Description"/>
-									<m:Label text="Supplier"/>
-								</form:content>
-							</form:SimpleForm>
-						</blocks>
-					</ObjectPageSubSection>
-				</subSections>
-			</ObjectPageSection>
+        id="ObjectPageLayout"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false"
+        preserveHeaderStateOnScroll="false"
 
-			<ObjectPageSection title="Material Detail">
-				<subSections>
-					<ObjectPageSubSection>
-						<blocks>
-							<m:Text text="Here comes the meins and mbrsh of the material"/>
-						</blocks>
-					</ObjectPageSubSection>
-				</subSections>
-			</ObjectPageSection>
-		</sections>
-	</ObjectPageLayout>
+        headerContentPinnable="true"
+        isChildPage="true"
+        upperCaseAnchorBar="false">
+        <headerTitle>
+            <ObjectPageHeader objectTitle="{MaterialSet>Matnr}" isObjectTitleAlwaysVisible="false"/>
+        </headerTitle>
+		<headerContent>
+		<m:FlexBox wrap="Wrap" fitContainer="true" 	alignItems="Stretch">
+		<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+		<m:Label text="Omschrijving"></m:Label>
+		<m:Text text="{MaterialSet>Maktx}"></m:Text>
+		</m:VBox>
+		</m:FlexBox>
+		</headerContent>
+        <sections>
+            <ObjectPageSection title="Material Detail">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:Table
+                                id="materialdetailTable"  items="{MaterialSet>Material_detail/results}"
+								mode="None"
+                            >
+                                <m:headerToolbar>
+                                    <m:OverflowToolbar>
+                                        <m:Title
+                                            text="Material Details"
+                                            level="H2"
+                                        />
+                                        <m:ToolbarSpacer />
+                                    </m:OverflowToolbar>
+                                </m:headerToolbar>
+                                <m:columns>
+                                    <m:Column
+                                        id="matnrCol"
+                                        width="12em"
+                                    >
+                                        <m:VBox>
+                                            <m:Text text="Matnr" />
+                                        </m:VBox>
+                                    </m:Column>
+                                    <m:Column
+                                        id="mbrshCol"
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        hAlign="End"
+                                    >
+                                        <m:Text text="Industry" />
+                                    </m:Column>
+                                    <m:Column
+                                        id="MeinsCol"
+                                        minScreenWidth="Tablet"
+                                        demandPopin="true"
+                                        hAlign="End"
+                                    >
+                                        <m:Text text="Unit of Measure" />
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem
+                                        type="Inactive"
+    									vAlign="Middle"
+                                    >
+                                        <m:cells>
+                                            <m:ObjectIdentifier
+                                                title="{Matnr}"
+                                            />
+                                            <m:Text text="{Mbrsh}" />
+                                            <m:Text text="{Meins}" />
+                                        </m:cells>
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
 </mvc:View>
