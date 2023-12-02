@@ -19,10 +19,11 @@ sap.ui.define([
 			    this._mViewSettingsDialogs = {};
             },
 
-            onListItemPress: function () {
-                var oFCL = this.oView.getParent().getParent();
+            onListItemPress: function (oEvent) {
+                let sMaterialPath = oEvent.getSource().getBindingContext().getPath(),
+                oSelectedMaterial = sMaterialPath.split("'")[1]; // We split the path /MaterialSet('SHRT1636') into 3 pieces by splitting on '
 
-                oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
+			    this.getOwnerComponent().getRouter().navTo("detail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, material: oSelectedMaterial});
             },
             onDescriptionSearch: function (oEvent) {
                 var sSearchValue = oEvent.getParameter("newValue");

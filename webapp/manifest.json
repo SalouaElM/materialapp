@@ -103,6 +103,46 @@
             "type": "XML",
             "async": true,
             "id": "fcl"
+        },
+        "routing": {
+          "config": {
+            "routerClass": "sap.f.routing.Router",
+            "type": "View",
+            "viewType": "XML",
+            "path": "ap.materialapp.view",
+            "controlId": "fcl",
+            "transition": "slide",
+            "bypassed": {},
+            "async": true,
+            "clearControlAggregation": false
+          },
+          "routes": [
+            {
+              "pattern": ":?layout:",
+              "name": "master",
+              "target": [
+                "master"
+              ]
+            },
+            {
+              "pattern": "detail/{material}/{layout}",
+              "name": "detail",
+              "target": [
+                "master",
+                "detail"
+              ]
+            }
+          ],
+          "targets": {
+            "master": {
+              "viewName": "Main",
+              "controlAggregation": "beginColumnPages"
+            },
+            "detail": {
+              "viewName": "MaterialDetail",
+              "controlAggregation": "midColumnPages"
+            }
         }
     }
+}
 }

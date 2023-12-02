@@ -1,4 +1,5 @@
 <mvc:View
+	controllerName="ap.materialapp.controller.MaterialDetail"
 	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.uxap"
 	xmlns:m="sap.m"
 	xmlns:f="sap.f"
@@ -17,19 +18,7 @@
 				</actions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
-        <headerContent>
-			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
-				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Main Category"/>
-				</m:VBox>
-				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Subcategory"/>
-				</m:VBox>
-				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					<m:Label text="Price"/>
-				</m:VBox>
-			</m:FlexBox>
-		</headerContent>
+       
         <sections>
 			<ObjectPageSection title="General Information">
 				<subSections>
@@ -56,11 +45,11 @@
 				</subSections>
 			</ObjectPageSection>
 
-			<ObjectPageSection title="Suppliers">
+			<ObjectPageSection title="Material Detail">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:Text text="Here comes the sales data table"/>
+							<m:Text text="Here comes the meins and mbrsh of the material"/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
