@@ -16,17 +16,43 @@
         isChildPage="true"
         upperCaseAnchorBar="false">
         <headerTitle>
-            <ObjectPageHeader objectTitle="{MaterialSet>Matnr}" isObjectTitleAlwaysVisible="false"/>
+            <ObjectPageHeader objectTitle="{Matnr}" isObjectTitleAlwaysVisible= "false"/>
         </headerTitle>
 		<headerContent>
-		<m:FlexBox wrap="Wrap" fitContainer="true" 	alignItems="Stretch">
-		<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-		<m:Label text="Omschrijving"></m:Label>
-		<m:Text text="{MaterialSet>Maktx}"></m:Text>
-		</m:VBox>
-		</m:FlexBox>
+			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<m:Label text="Omschrijving"/>
+					<m:Text text="{Maktx}"/>
+				</m:VBox>
+			</m:FlexBox>
 		</headerContent>
         <sections>
+        <ObjectPageSection title="General Information">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<form:SimpleForm
+								maxContainerCols="2"
+								editable="false"
+								layout="ResponsiveGridLayout"
+								labelSpanL="12"
+								labelSpanM="12"
+								emptySpanL="0"
+								emptySpanM="0"
+								columnsL="1"
+								columnsM="1">
+								<form:content>
+
+									<m:Text text="MaterialNr: {Matnr}"/>	
+									<m:Text text="Omschrijving: {Maktx}"/>	
+                                    <m:Text text="Group: {Matkl}"/>	
+									<m:Text text="Type: {Mtart}"/>
+								</form:content>
+							</form:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
             <ObjectPageSection title="Material Detail">
                 <subSections>
                     <ObjectPageSubSection>

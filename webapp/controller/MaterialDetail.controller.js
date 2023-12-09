@@ -19,7 +19,6 @@ sap.ui.define([
     
                 this.getView().bindElement({
                     path: sMaterialPath,
-                    model: ""
                 });
     
                 var oTable = this.getView().byId("materialdetailTable");
