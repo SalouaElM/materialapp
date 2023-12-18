@@ -5,7 +5,7 @@ sap.ui.define([
     'sap/ui/model/Sorter',
     'sap/ui/core/Fragment',
     'sap/ui/model/Filter',
-	'sap/ui/export/Spreadsheet',
+    'sap/ui/export/Spreadsheet',
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -16,20 +16,20 @@ sap.ui.define([
         return Controller.extend("ap.materialapp.controller.Main", {
             onInit: function () {
                 // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
-			    this._mViewSettingsDialogs = {};
+                this._mViewSettingsDialogs = {};
             },
 
             onListItemPress: function (oEvent) {
                 let sMaterialPath = oEvent.getSource().getBindingContext().getPath(),
-                oSelectedMaterial = sMaterialPath.split("'")[1]; // We split the path /MaterialSet('SHRT1636') into 3 pieces by splitting on '
+                    oSelectedMaterial = sMaterialPath.split("'")[1]; // We split the path /MaterialSet('SHRT1636') into 3 pieces by splitting on '
 
-			    this.getOwnerComponent().getRouter().navTo("detail", {layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, material: oSelectedMaterial});
+                this.getOwnerComponent().getRouter().navTo("detail", { layout: fioriLibrary.LayoutType.TwoColumnsMidExpanded, material: oSelectedMaterial });
             },
             onDescriptionSearch: function (oEvent) {
                 var sSearchValue = oEvent.getParameter("newValue");
                 var oTable = this.byId("materialTable");
                 var oBinding = oTable.getBinding("items");
-            
+
                 var aFilters = [];
                 if (sSearchValue && sSearchValue.length > 0) {
                     this._oMaktxFilter = new Filter("Maktx", sap.ui.model.FilterOperator.Contains, sSearchValue);
@@ -38,53 +38,53 @@ sap.ui.define([
                     // Clear the filter if search field is empty
                     this._oMaktxFilter = null;
                 }
-            
+
                 // Get the other applied filters except for "Omschrijving" if present
-                var aAppliedFilters = this._appliedFilters.filter(function(filter) {
+                var aAppliedFilters = this._appliedFilters.filter(function (filter) {
                     return filter.sPath !== "Maktx";
                 });
-            
+
                 // Combine with "Omschrijving" filter if it exists
                 if (this._oMaktxFilter) {
                     aAppliedFilters.push(this._oMaktxFilter);
                 }
-            
+
                 oBinding.filter(aAppliedFilters);
             },
-            
+
             handleFilterDialogConfirm: function (oEvent) {
                 var oTable = this.byId("materialTable"),
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     aFilters = [];
-            
+
                 // Process the filter items
-                mParams.filterItems.forEach(function(oItem) {
+                mParams.filterItems.forEach(function (oItem) {
                     var sPath = oItem.getParent().getKey(),
                         sOperator = 'EQ',
                         sValue1 = oItem.getKey(),
                         oFilter = new Filter(sPath, sOperator, sValue1);
-            
+
                     aFilters.push(oFilter);
                 });
-            
+
                 // Store the applied filters in a variable in the controller
                 this._appliedFilters = aFilters;
-            
+
                 // Get the other applied filters except for "Omschrijving" if present
-                var aAppliedFilters = aFilters.filter(function(filter) {
+                var aAppliedFilters = aFilters.filter(function (filter) {
                     return filter.sPath !== "Maktx";
                 });
-            
+
                 // Combine with "Omschrijving" filter if it exists
                 if (this._oMaktxFilter) {
                     aAppliedFilters.push(this._oMaktxFilter);
                 }
-            
+
                 // Apply the combined filters
                 oBinding.filter(aAppliedFilters);
             },
-            
+
             handleSortButtonPressed: function () {
                 this.getViewSettingsDialog("ap.materialapp.fragments.sortDialog")
                     .then(function (oViewSettingsDialog) {
@@ -130,46 +130,46 @@ sap.ui.define([
                 // apply the selected sort and group settings
                 oBinding.sort(aSorters);
             },
-            createColumnConfig: function() {
+            createColumnConfig: function () {
                 var aCols = [];
-            
+
                 aCols.push({
                     label: 'Material Number',
                     property: 'Matnr',
                     type: 'string'
                 });
-            
+
                 aCols.push({
                     label: 'Material Description',
                     property: 'Maktx',
                     type: 'string'
                 });
-            
+
                 aCols.push({
                     label: 'Material Group',
                     property: 'Matkl',
                     type: 'string'
                 });
-            
+
                 aCols.push({
                     label: 'Material Type',
                     property: 'Mtart',
                     type: 'string'
                 });
-    
+
                 return aCols;
-            },    
-            onExport: function() {
+            },
+            onExport: function () {
                 var aCols, oRowBinding, oSettings, oSheet, oTable;
-    
+
                 if (!this._oTable) {
                     this._oTable = this.byId('materialTable');
                 }
-    
+
                 oTable = this._oTable;
                 oRowBinding = oTable.getBinding('items');
                 aCols = this.createColumnConfig();
-    
+
                 oSettings = {
                     workbook: {
                         columns: aCols,
@@ -177,11 +177,11 @@ sap.ui.define([
                     },
                     dataSource: oRowBinding,
                     fileName: 'Table export Materials.xlsx',
-                    worker: false 
+                    worker: false
                 };
-    
+
                 oSheet = new Spreadsheet(oSettings);
-                oSheet.build().finally(function() {
+                oSheet.build().finally(function () {
                     oSheet.destroy();
                 });
             },
@@ -190,12 +190,11 @@ sap.ui.define([
                 var oTable = this.getView().byId("materialTable");
                 var iTotalItems = oTable.getBinding("items").getLength();
                 var iThreshold = oTable.getGrowingThreshold();
-            
+
                 if (iTotalItems < iThreshold) {
-                    // Load more data here or make a service call to fetch additional data
-                    // You might need to adjust this logic based on your data retrieval mechanism
+
                 }
+
             }
-            
         });
     });
