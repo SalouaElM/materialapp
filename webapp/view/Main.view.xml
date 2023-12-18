@@ -11,7 +11,12 @@
         <content>
             <Table
                 id="materialTable"
+                growing="true"
+                growingThreshold="20" 
+                growingScrollToLoad="true"
                 items="{/MaterialSet}"
+                mode="None"
+                updateFinished="onUpdateFinished"
             >
             <headerToolbar>
 				<OverflowToolbar>

@@ -185,5 +185,17 @@ sap.ui.define([
                     oSheet.destroy();
                 });
             },
+            onUpdateFinished: function (oEvent) {
+                // Check if all items have been loaded
+                var oTable = this.getView().byId("materialTable");
+                var iTotalItems = oTable.getBinding("items").getLength();
+                var iThreshold = oTable.getGrowingThreshold();
+            
+                if (iTotalItems < iThreshold) {
+                    // Load more data here or make a service call to fetch additional data
+                    // You might need to adjust this logic based on your data retrieval mechanism
+                }
+            }
+            
         });
     });
