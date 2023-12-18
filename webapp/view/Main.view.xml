@@ -1,14 +1,19 @@
 <mvc:View
     controllerName="ap.materialapp.controller.Main"
     xmlns="sap.m"
-	xmlns:f="sap.f"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core" displayBlock="true">
+    <f:DynamicPage id="page">
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
 
-    <Page
-        id="page"
-        title="{i18n>title}"
-    >
-        <content>
+                 </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
             <Table
                 id="materialTable"
                 growing="true"
@@ -80,6 +85,6 @@
                     </ColumnListItem>
                 </items>
             </Table>
-        </content>
-    </Page>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
